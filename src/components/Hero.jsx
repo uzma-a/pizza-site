@@ -5,7 +5,7 @@ const Hero = () => {
   return (
     <section
   id="home"
-  className="relative min-h-screen sm:pt-10 md:pt-4 bg-gradient-to-b from-[#1a0f0a] via-[#2b1a12] to-[#0d0d0d] 
+  className="relative min-h-screen sm:pt-2 md:pt-2 bg-gradient-to-b from-[#1a0f0a] via-[#2b1a12] to-[#0d0d0d] 
              text-center text-white flex items-start justify-center px-6 overflow-hidden"
 >
 
