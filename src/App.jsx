@@ -149,7 +149,7 @@ function App() {
                         ))}
                       </ul>
 
-                      {/* Checkout Form */}
+                      
                       {/* Checkout Form */}
                       <form
                         action="https://api.web3forms.com/submit"
@@ -165,7 +165,7 @@ function App() {
                         <input
                           type="hidden"
                           name="redirect"
-                          value="http://localhost:5173/thank-you"
+                          value="https://homemade-pizza-by-ayesha.vercel.app/thank-you"
                         />
 
                         {/* Customer Details */}
