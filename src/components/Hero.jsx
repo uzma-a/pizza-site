@@ -3,16 +3,22 @@ import { Flame, Heart, Star, Crown } from "lucide-react";
 
 const Hero = () => {
   return (
-    <section id="home" className="relative h-[94vh] bg-gradient-to-b from-[#1a0f0a] via-[#2b1a12] to-[#0d0d0d] text-center text-white flex items-center justify-center px-6 overflow-hidden">
+    <section
+  id="home"
+  className="relative h-screen bg-gradient-to-b from-[#1a0f0a] via-[#2b1a12] to-[#0d0d0d] 
+             text-center text-white px-6 overflow-hidden"
+>
+
       {/* Background overlay dots */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.1),transparent_40%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.05),transparent_50%)]" />
 
-      <div className="relative max-w-4xl mx-auto mt-16">
-        {/* Title */}
-        <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-orange-400 via-yellow-400 to-orange-500 bg-clip-text text-transparent mb-6 leading-tight">
-          Homemade Pizza by Aayesha
-        </h1>
+      <div className="relative max-w-4xl mx-auto pt-36 md:pt-24">
+  {/* Title */}
+  <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-orange-400 via-yellow-400 to-orange-500 bg-clip-text text-transparent mb-6 leading-tight">
+    Homemade Pizza by Aayesha
+  </h1>
+
 
         {/* Subtitle */}
         <h2 className="text-2xl md:text-4xl font-semibold text-yellow-400 mb-4">
@@ -21,8 +27,8 @@ const Hero = () => {
 
         {/* Tagline */}
         <p className="text-xl md:text-2xl font-bold text-yellow-300 mb-8 flex items-center justify-center gap-2 flex-wrap">
-          <Flame className="text-red-500 w-6 h-6" /> 
-          Taste the Magic of Authentic Homemade Flavors! 
+          <Flame className="text-red-500 w-6 h-6" />
+          Taste the Magic of Authentic Homemade Flavors!
           <Flame className="text-red-500 w-6 h-6" />
         </p>
 

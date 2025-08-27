@@ -62,7 +62,7 @@ const Navbar = ({ cartCount, onCartClick }) => {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-3xl focus:outline-none"
+          className="md:hidden text-3xl focus:outline-none text-orange-400"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           {menuOpen ? "✖" : "☰"}
@@ -71,7 +71,7 @@ const Navbar = ({ cartCount, onCartClick }) => {
 
       {/* Mobile Dropdown */}
       {menuOpen && (
-        <div className="md:hidden mt-4 space-y-4 text-center text-lg font-medium pb-4">
+        <div className="md:hidden text-orange-400 mt-4 space-y-4 text-center text-lg font-medium pb-4">
           <p
             onClick={() => handleScroll("home")}
             className="hover:text-orange-400 cursor-pointer transition"
