@@ -99,7 +99,7 @@ const Cart = ({
 
         {cart.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-gray-500">Your cart is empty</p>
+            <p className="text-orange-500">Your cart is empty</p>
             <p className="text-6xl">🍕</p>
             <p className="text-gray-400 text-sm mt-2">Add some delicious pizzas!</p>
           </div>
@@ -110,7 +110,7 @@ const Cart = ({
 
             {/* LEFT SIDE → Cart Items + Total */}
             <div className="space-y-4">
-              <h3 className="font-semibold text-lg text-gray-800 border-b pb-2">
+              <h3 className="font-semibold text-lg text-orange-600 border-b pb-2">
                 🍕 Your Cart
               </h3>
 
@@ -119,7 +119,7 @@ const Cart = ({
                 {cart.map((item) => (
                   <div
                     key={item.name}
-                    className="flex items-center gap-3 bg-gray-50 rounded-lg p-2 border border-gray-200"
+                    className="flex items-center bg-slate-200 gap-3 bg-gray-50 rounded-lg p-2 border border-gray-200"
                   >
                     <img
                       src={item.image}
