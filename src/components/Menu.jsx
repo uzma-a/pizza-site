@@ -1,13 +1,21 @@
 import React, { useState } from "react";
+import onionPizza from "../assets/onion-pizza.jpg";
+import cheeseCorn from "../assets/cheese-corn.jpg";
+import eggPizza from "../assets/Egg_Pizza.jpg";
+import chickenPizza from "../assets/chicken-pizza.jpg";
+import doubleChicken from "../assets/double-chicken-pizza.jpg";
+import soyaPizza from "../assets/soya-pizza.jpg";
+
 
 const pizzas = [
-  { name: "Classic Onion Pizza", price: 130, desc: "A timeless classic with perfectly caramelized onions on our signature homemade base." },
-  { name: "Cheese Corn Pizza", price: 150, desc: "Sweet corn kernels with melted cheese creating the perfect comfort food combination." },
-  { name: "Cheese Egg Pizza", price: 150, desc: "Fluffy eggs and rich cheese blend for a protein-packed delicious treat." },
-  { name: "Cheese Chicken Pizza", price: 160, desc: "Tender chicken pieces with premium cheese on our homemade pizza base." },
-  { name: "Double Cheese Chicken Pizza", price: 170, desc: "Extra cheese and chicken for those who want the ultimate indulgence." },
-  { name: "Cheese Soyabean Pizza", price: 150, desc: "Healthy soyabean chunks with cheese - a perfect vegetarian protein option." },
+  { name: "Classic Onion Pizza", price: 130, desc: "A timeless classic with perfectly caramelized onions on our signature homemade base.", image: onionPizza },
+  { name: "Cheese Corn Pizza", price: 150, desc: "Sweet corn kernels with melted cheese creating the perfect comfort food combination.", image: cheeseCorn },
+  { name: "Cheese Egg Pizza", price: 150, desc: "Fluffy eggs and rich cheese blend for a protein-packed delicious treat.", image: eggPizza },
+  { name: "Cheese Chicken Pizza", price: 160, desc: "Tender chicken pieces with premium cheese on our homemade pizza base.", image: chickenPizza },
+  { name: "Double Cheese Chicken Pizza", price: 170, desc: "Extra cheese and chicken for those who want the ultimate indulgence.", image: doubleChicken },
+  { name: "Cheese Soyabean Pizza", price: 150, desc: "Healthy soyabean chunks with cheese - a perfect vegetarian protein option.", image: soyaPizza },
 ];
+
 
 const Menu = ({ addToCart }) => {
   const [addedIndex, setAddedIndex] = useState(null);
@@ -35,6 +43,9 @@ const Menu = ({ addToCart }) => {
               key={index}
               className="relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-6 shadow-xl border border-gray-700 hover:border-orange-400 hover:shadow-orange-500/30 transition"
             >
+              <img src={pizza.image} alt={pizza.name} className="w-full h-42 object-cover rounded-lg mb-4" />
+
+
               <div className="flex justify-between items-center mb-3">
                 <h3 className="text-xl font-semibold text-orange-400">
                   🍕 {pizza.name}
