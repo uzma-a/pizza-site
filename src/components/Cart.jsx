@@ -37,10 +37,10 @@ const Cart = ({
       return;
     }
 
-    // ✅ Create UPI deep link
-    const upiLink = `upi://pay?pa=8674821813@axl&pn=HomeMade%20Pizza&am=${totalAmount}&cu=INR&tn=Pizza%20Order`;
+    // ✅ UPI deep link (your new UPI ID)
+    const upiLink = `upi://pay?pa=aayeshaparwezjsr-1@oksbi&pn=HomeMade%20Pizza&am=${totalAmount}&cu=INR&tn=Pizza%20Order`;
 
-    // Open UPI app
+    // Open UPI app on mobile
     window.location.href = upiLink;
 
     // Save order as UPI
@@ -54,6 +54,7 @@ const Cart = ({
     // Reset details
     setCustomerDetails({ name: "", address: "", phone: "", email: "" });
   };
+
 
 
 
