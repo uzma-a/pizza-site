@@ -55,9 +55,6 @@ const Cart = ({
     setCustomerDetails({ name: "", address: "", phone: "", email: "" });
   };
 
-
-
-
   const handleCashOnDelivery = (e) => {
     e.preventDefault();
     if (!customerDetails.name || !customerDetails.address || !customerDetails.phone) {
