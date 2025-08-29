@@ -32,18 +32,30 @@ const Cart = ({
 
   const handleUPIPayment = (e) => {
   e.preventDefault();
+
   if (!customerDetails.name || !customerDetails.address || !customerDetails.phone) {
     toast.error("Please fill all required fields");
     return;
   }
 
   const upiLink = `upi://pay?pa=aayeshaparwezjsr-1@oksbi&pn=HomeMade%20Pizza&am=${totalAmount}&cu=INR&tn=Pizza%20Order`;
-  window.location.href = upiLink;
 
-  // ❌ Remove auto onOrderSuccess here
-  // ✅ Instead, show toast
-  toast.info("Redirecting to UPI app. Please complete payment and then confirm.");
+  try {
+    // create hidden <a> link
+    const a = document.createElement("a");
+    a.href = upiLink;
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    toast.info("UPI app khul raha hai. PIN dalke payment complete kijiye!");
+  } catch (err) {
+    console.error("UPI redirect failed:", err);
+    toast.error("Unable to open UPI app. Please pay manually.");
+  }
 };
+
 
 
   const handleCashOnDelivery = (e) => {
