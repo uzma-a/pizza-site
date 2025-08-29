@@ -23,38 +23,43 @@ const Cart = ({
 
   if (!showCart) return null;
 
+const handleUPIPayment = (e) => {
+    e.preventDefault();
+
+    if (!customerDetails.name || !customerDetails.address || !customerDetails.phone) {
+      toast.error("Please fill all required fields");
+      return;
+    }
+
+    const upiLink = `upi://pay?pa=aayeshaparwezjsr-1@oksbi&pn=HomeMade%20Pizza&am=${totalAmount}&cu=INR&tn=Pizza%20Order`;
+
+    try {
+      // Create hidden anchor tag to trigger UPI apps
+      const a = document.createElement("a");
+      a.href = upiLink;
+      a.style.display = "none";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      toast.info("UPI app khul raha hai. PIN dalke payment complete kijiye!");
+    } catch (err) {
+      console.error("UPI redirect failed:", err);
+      toast.error("Unable to open UPI app. Please pay manually.");
+    }
+  };
+
+  // ✅ Copy UPI ID fallback
+  const handleCopyUPI = () => {
+    navigator.clipboard.writeText("aayeshaparwezjsr-1@oksbi");
+    toast.success("UPI ID copied! Open PhonePe / GPay and paste it to pay.");
+  };
   const handleInputChange = (e) => {
     setCustomerDetails(prev => ({
       ...prev,
       [e.target.name]: e.target.value
     }));
   };
-
-  const handleUPIPayment = (e) => {
-  e.preventDefault();
-
-  if (!customerDetails.name || !customerDetails.address || !customerDetails.phone) {
-    toast.error("Please fill all required fields");
-    return;
-  }
-
-  const upiLink = `upi://pay?pa=aayeshaparwezjsr-1@oksbi&pn=HomeMade%20Pizza&am=${totalAmount}&cu=INR&tn=Pizza%20Order`;
-
-  try {
-    // create hidden <a> link
-    const a = document.createElement("a");
-    a.href = upiLink;
-    a.style.display = "none";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-
-    toast.info("UPI app khul raha hai. PIN dalke payment complete kijiye!");
-  } catch (err) {
-    console.error("UPI redirect failed:", err);
-    toast.error("Unable to open UPI app. Please pay manually.");
-  }
-};
 
 
 
@@ -169,68 +174,51 @@ const Cart = ({
             </div>
 
             {/* RIGHT SIDE → Customer Details + Payment */}
-            <form className="space-y-4 flex flex-col justify-between">
-              <div>
-                <h3 className="font-semibold text-lg text-gray-800 border-b pb-2">
-                  📋 Customer Details
-                </h3>
+             {/* Customer Details */}
+      <form onSubmit={handleUPIPayment}>
+        <input
+          type="text"
+          name="name"
+          placeholder="Your Name"
+          value={customerDetails.name}
+          onChange={handleChange}
+          className="block w-full mb-2 p-2 border rounded"
+        />
+        <input
+          type="text"
+          name="address"
+          placeholder="Delivery Address"
+          value={customerDetails.address}
+          onChange={handleChange}
+          className="block w-full mb-2 p-2 border rounded"
+        />
+        <input
+          type="text"
+          name="phone"
+          placeholder="Phone Number"
+          value={customerDetails.phone}
+          onChange={handleChange}
+          className="block w-full mb-2 p-2 border rounded"
+        />
 
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Full Name *"
-                  value={customerDetails.name}
-                  onChange={handleInputChange}
-                  className="w-full border border-gray-300 rounded px-3 py-2 mt-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
-                />
+        {/* Payment Buttons */}
+        <div className="flex gap-3 mt-4">
+          <button
+            type="submit"
+            className="bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700"
+          >
+            Pay via UPI App
+          </button>
 
-                <textarea
-                  name="address"
-                  placeholder="Delivery Address *"
-                  value={customerDetails.address}
-                  onChange={handleInputChange}
-                  rows="3"
-                  className="w-full border border-gray-300 rounded px-3 py-2 mt-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
-                />
-
-                <input
-                  type="tel"
-                  name="phone"
-                  placeholder="Phone Number *"
-                  value={customerDetails.phone}
-                  onChange={handleInputChange}
-                  className="w-full border border-gray-300 rounded px-3 py-2 mt-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
-                />
-
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email (Optional)"
-                  value={customerDetails.email}
-                  onChange={handleInputChange}
-                  className="w-full border border-gray-300 rounded px-3 py-2 mt-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
-                />
-              </div>
-
-              {/* Payment Buttons */}
-              <div className="space-y-2 pt-4">
-                <button
-                  onClick={handleUPIPayment}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-3 rounded-lg transition text-sm"
-                >
-                  💳 Pay via UPI (GPay / Paytm / PhonePe)
-                </button>
-
-                <button
-                  onClick={handleCashOnDelivery}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-3 rounded-lg transition text-sm"
-                >
-                  💰 Cash on Delivery
-                </button>
-              </div>
-
-
-            </form>
+          <button
+            type="button"
+            onClick={handleCopyUPI}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700"
+          >
+            Copy UPI ID
+          </button>
+        </div>
+      </form>
           </div>
         )}
       </div>
