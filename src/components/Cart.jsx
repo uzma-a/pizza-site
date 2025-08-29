@@ -37,7 +37,7 @@ const Cart = ({
     return;
   }
 
-  const upiLink = `upi://pay?pa=8674821813@axl&pn=HomeMade%20Pizza&am=${totalAmount}&cu=INR&tn=Pizza%20Order`;
+  const upiLink = `upi://pay?pa=aayeshaparwezjsr-1@oksbi&pn=HomeMade%20Pizza&am=${totalAmount}&cu=INR&tn=Pizza%20Order`;
   window.location.href = upiLink;
 
   // ❌ Remove auto onOrderSuccess here
