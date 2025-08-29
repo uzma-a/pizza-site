@@ -31,29 +31,20 @@ const Cart = ({
   };
 
   const handleUPIPayment = (e) => {
-    e.preventDefault();
-    if (!customerDetails.name || !customerDetails.address || !customerDetails.phone) {
-      toast.error("Please fill all required fields");
-      return;
-    }
+  e.preventDefault();
+  if (!customerDetails.name || !customerDetails.address || !customerDetails.phone) {
+    toast.error("Please fill all required fields");
+    return;
+  }
 
-    // ✅ UPI deep link (your new UPI ID)
-    const upiLink = `upi://pay?pa=aayeshaparwezjsr-1@oksbi&pn=HomeMade%20Pizza&am=${totalAmount}&cu=INR&tn=Pizza%20Order`;
+  const upiLink = `upi://pay?pa=aayeshaparwezjsr-1@oksbi&pn=HomeMade%20Pizza&am=${totalAmount}&cu=INR&tn=Pizza%20Order`;
+  window.location.href = upiLink;
 
-    // Open UPI app on mobile
-    window.location.href = upiLink;
+  // ❌ Remove auto onOrderSuccess here
+  // ✅ Instead, show toast
+  toast.info("Redirecting to UPI app. Please complete payment and then confirm.");
+};
 
-    // Save order as UPI
-    onOrderSuccess({
-      customerDetails,
-      cart,
-      totalAmount,
-      paymentMethod: "upi",
-    });
-
-    // Reset details
-    setCustomerDetails({ name: "", address: "", phone: "", email: "" });
-  };
 
   const handleCashOnDelivery = (e) => {
     e.preventDefault();
