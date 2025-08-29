@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { usePayment } from '../hooks/usePayment';
+
 import { toast } from 'react-toastify';
 
 const Cart = ({
@@ -19,7 +19,7 @@ const Cart = ({
     email: '',
   });
   const [isProcessing, setIsProcessing] = useState(false);
-  const { initiatePayment } = usePayment();
+
 
   if (!showCart) return null;
 
@@ -30,40 +30,32 @@ const Cart = ({
     }));
   };
 
-  const handlePayment = (e) => {
+  const handleUPIPayment = (e) => {
     e.preventDefault();
     if (!customerDetails.name || !customerDetails.address || !customerDetails.phone) {
-      toast.error('Please fill all required fields');
+      toast.error("Please fill all required fields");
       return;
     }
-    setIsProcessing(true);
 
-    const orderData = {
-      amount: totalAmount,
-      customerName: customerDetails.name,
-      customerPhone: customerDetails.phone,
-      customerEmail: customerDetails.email,
-    };
+    // ✅ Create UPI deep link
+    const upiLink = `upi://pay?pa=8674821813@axl&pn=HomeMade%20Pizza&am=${totalAmount}&cu=INR&tn=Pizza%20Order`;
 
-    initiatePayment(
-      orderData,
-      (paymentData) => {
-        onOrderSuccess({
-          customerDetails,
-          cart,
-          totalAmount,
-          paymentData,
-          paymentMethod: 'razorpay',
-        });
-        setIsProcessing(false);
-        setCustomerDetails({ name: '', address: '', phone: '', email: '' });
-      },
-      (error) => {
-        console.error('Payment failed:', error);
-        setIsProcessing(false);
-      }
-    );
+    // Open UPI app
+    window.location.href = upiLink;
+
+    // Save order as UPI
+    onOrderSuccess({
+      customerDetails,
+      cart,
+      totalAmount,
+      paymentMethod: "upi",
+    });
+
+    // Reset details
+    setCustomerDetails({ name: "", address: "", phone: "", email: "" });
   };
+
+
 
   const handleCashOnDelivery = (e) => {
     e.preventDefault();
@@ -105,8 +97,8 @@ const Cart = ({
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
-            
-           
+
+
 
             {/* LEFT SIDE → Cart Items + Total */}
             <div className="space-y-4">
@@ -175,7 +167,7 @@ const Cart = ({
               </div>
             </div>
 
-             {/* RIGHT SIDE → Customer Details + Payment */}
+            {/* RIGHT SIDE → Customer Details + Payment */}
             <form className="space-y-4 flex flex-col justify-between">
               <div>
                 <h3 className="font-semibold text-lg text-gray-800 border-b pb-2">
@@ -222,18 +214,10 @@ const Cart = ({
               {/* Payment Buttons */}
               <div className="space-y-2 pt-4">
                 <button
-                  onClick={handlePayment}
-                  disabled={isProcessing}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-3 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                  onClick={handleUPIPayment}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-3 rounded-lg transition text-sm"
                 >
-                  {isProcessing ? (
-                    <span className="flex items-center justify-center gap-2">
-                      <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      Processing...
-                    </span>
-                  ) : (
-                    '💳 Pay Online (UPI/Card/Wallet)'
-                  )}
+                  💳 Pay via UPI (GPay / Paytm / PhonePe)
                 </button>
 
                 <button
@@ -243,6 +227,8 @@ const Cart = ({
                   💰 Cash on Delivery
                 </button>
               </div>
+
+
             </form>
           </div>
         )}

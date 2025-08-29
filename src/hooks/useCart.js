@@ -1,4 +1,4 @@
-// hooks/useCart.js - Updated with Payment Integration
+// hooks/useCart.js
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
@@ -7,7 +7,7 @@ export const useCart = () => {
   const [showCart, setShowCart] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
 
-  // Add to cart (merge by name)
+  // Add to cart
   const addToCart = (pizza) => {
     setCart((prev) => {
       const existing = prev.find((item) => item.name === pizza.name);
@@ -22,13 +22,10 @@ export const useCart = () => {
     });
   };
 
-  // Quantity controls
   const incrementItem = (name) => {
     setCart((prev) =>
       prev.map((item) =>
-        item.name === name 
-          ? { ...item, quantity: item.quantity + 1 } 
-          : item
+        item.name === name ? { ...item, quantity: item.quantity + 1 } : item
       )
     );
   };
@@ -37,9 +34,7 @@ export const useCart = () => {
     setCart((prev) =>
       prev
         .map((item) =>
-          item.name === name 
-            ? { ...item, quantity: item.quantity - 1 } 
-            : item
+          item.name === name ? { ...item, quantity: item.quantity - 1 } : item
         )
         .filter((item) => item.quantity > 0)
     );
@@ -49,22 +44,20 @@ export const useCart = () => {
     setCart((prev) => prev.filter((item) => item.name !== name));
   };
 
-  const clearCart = () => {
-    setCart([]);
-  };
-
+  const clearCart = () => setCart([]);
   const toggleCart = () => setShowCart((prev) => !prev);
 
-  // Computed values
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
-  const totalAmount = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const totalAmount = cart.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
 
-  // Updated order success handler (works for both payment methods)
+  // ✅ Order success handler (only COD / UPI)
   const handleOrderSuccess = async (orderData) => {
-    const { customerDetails, cart, totalAmount, paymentData, paymentMethod } = orderData;
+    const { customerDetails, cart, totalAmount, paymentMethod } = orderData;
 
     try {
-      // Prepare order details for Web3Forms
       const formData = new FormData();
       formData.append('access_key', '39976cab-388c-4502-8d45-6dd1365c0853');
       formData.append('subject', 'New Pizza Order - HomeMade Pizza');
@@ -72,37 +65,26 @@ export const useCart = () => {
       formData.append('phone', customerDetails.phone);
       formData.append('address', customerDetails.address);
       formData.append('email', customerDetails.email || 'Not provided');
-      
-      // Order details
-      const orderItems = cart.map(item => 
-        `${item.name} x${item.quantity} (₹${item.price * item.quantity})`
-      ).join(', ');
-      
+
+      const orderItems = cart
+        .map(
+          (item) => `${item.name} x${item.quantity} (₹${item.price * item.quantity})`
+        )
+        .join(', ');
+
       formData.append('order', orderItems);
       formData.append('total', `₹${totalAmount}`);
       formData.append('payment_method', paymentMethod);
-      
-      // Add payment details if online payment
-      if (paymentMethod === 'razorpay' && paymentData) {
-        formData.append('payment_id', paymentData.razorpay_payment_id);
-        formData.append('payment_status', 'Paid Online');
-      } else {
-        formData.append('payment_status', 'Cash on Delivery');
-      }
 
-      // Send to Web3Forms
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         body: formData,
       });
 
       if (response.ok) {
-        toast.success(
-          paymentMethod === 'razorpay' 
-            ? '🎉 Payment successful! Order confirmed!' 
-            : '🎉 Order placed! Pay on delivery!',
-          { position: 'top-center' }
-        );
+        toast.success('🎉 Order placed successfully!', {
+          position: 'top-center',
+        });
         setShowPopup(true);
         clearCart();
         setShowCart(false);
@@ -129,7 +111,7 @@ export const useCart = () => {
     removeItem,
     clearCart,
     toggleCart,
-    handleOrderSuccess, // Updated function name
+    handleOrderSuccess,
     setShowCart,
     setShowPopup,
   };
