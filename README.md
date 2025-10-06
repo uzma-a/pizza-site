@@ -1,12 +1,13 @@
-# React + Vite
+🍕 Pizza Ordering Platform 🍕
+Developed a responsive pizza ordering web application with an interactive menu, cart management, and a seamless checkout process. The platform allows users to browse pizzas, customize orders, and proceed with checkout options including UPI and Cash on Delivery. Built with React.js and modern CSS for a user-friendly interface, ensuring smooth navigation and real-time cart updates.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Key Features:
 
-Currently, two official plugins are available:
+1. Interactive menu with add-to-cart and quantity management
+2. Dynamic cart and total price calculation
+3. Checkout form for capturing customer details
+4. Multiple payment options (UPI & Cash on Delivery)
+5. Responsive design for desktop and mobile
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Tech Stack:
+React, JavaScript, Axios.
